@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Socket.IO Example</title>
+</head>
+<body>
+    <h1>Socket.IO Example</h1>
+    <h2>How many users are here?</h2>
+    <p id="count"></p>
+    <form action="http://127.0.0.1:3000" method="POST">
+        <input type="text" name="msg" id="message"/>
+        <input type="submit"></input>
+    </form>
+    <!-- <button id="btn">现实聊天记录</button> -->
+    <p id="all"></p>
+</body>
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/node_modules/jquery/src/jquery.js"></script>
+<script>
+    const count = document.getElementById('count');
+    const btn=document.getElementById('btn');
+    const msg=document.getElementById('message');
+    const pVal=document.getElementById('all')
+    const socket = io.connect('http://127.0.0.1:3000');
+    socket.on('users', (data)=> {
+    console.log('Got update from the server');
+    console.log('There are ' + data.number + 'users');
+    count.innerHTML = data.number;
+    pVal.innerHTML = data.msg;
+    });
+</script>
